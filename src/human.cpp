@@ -23,20 +23,6 @@ HumanRobotModule::HumanRobotModule()
 
   /* Virtual links */
  	virtualLinks.push_back("base_link");
-  virtualLinks.push_back("hip2torso_1");
-  virtualLinks.push_back("hip2torso_2");
-  virtualLinks.push_back("torso2head_1");
-  virtualLinks.push_back("torso2head_2");
-  virtualLinks.push_back("torso2lshoulder_1");
-  virtualLinks.push_back("torso2lshoulder_2");
-  virtualLinks.push_back("torso2rshoulder_1");
-  virtualLinks.push_back("torso2rshoulder_2");
-  virtualLinks.push_back("torso2lleg_1");
-  virtualLinks.push_back("torso2lleg_2");
-  virtualLinks.push_back("torso2rleg_1");
-  virtualLinks.push_back("torso2rleg_2");
-  virtualLinks.push_back("forearm2lwrist_1");
-  virtualLinks.push_back("forearm2rwrist_1");
 
   /* Left hand fingers */
   /*filteredLinks.push_back("LHandThumb0Link");
