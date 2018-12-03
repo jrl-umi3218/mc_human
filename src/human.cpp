@@ -24,41 +24,6 @@ HumanRobotModule::HumanRobotModule()
   /* Virtual links */
  	virtualLinks.push_back("base_link");
 
-  /* Left hand fingers */
-  /*filteredLinks.push_back("LHandThumb0Link");
-  filteredLinks.push_back("LHandThumb1Link");
-  filteredLinks.push_back("LHandThumb2Link");
-  filteredLinks.push_back("LHandIndex1Link");
-  filteredLinks.push_back("LHandIndex2Link");
-  filteredLinks.push_back("LHandIndex3Link");
-  filteredLinks.push_back("LHandMiddle1Link");
-  filteredLinks.push_back("LHandMiddle2Link");
-  filteredLinks.push_back("LHandMiddle3Link");
-  filteredLinks.push_back("LHandRing1Link");
-  filteredLinks.push_back("LHandRing2Link");
-  filteredLinks.push_back("LHandRing3Link");
-  filteredLinks.push_back("LHandBaby1Link");
-  filteredLinks.push_back("LHandBaby2Link");
-  filteredLinks.push_back("LHandBaby3Link");*/
-
-  /* Right hand fingers */
-  /*filteredLinks.push_back("RHandThumb0Link");
-  filteredLinks.push_back("RHandThumb1Link");
-  filteredLinks.push_back("RHandThumb2Link");
-  filteredLinks.push_back("RHandIndex1Link");
-  filteredLinks.push_back("RHandIndex2Link");
-  filteredLinks.push_back("RHandIndex3Link");
-  filteredLinks.push_back("RHandMiddle1Link");
-  filteredLinks.push_back("RHandMiddle2Link");
-  filteredLinks.push_back("RHandMiddle3Link");
-  filteredLinks.push_back("RHandRing1Link");
-  filteredLinks.push_back("RHandRing2Link");
-  filteredLinks.push_back("RHandRing3Link");
-  filteredLinks.push_back("RHandBaby1Link");
-  filteredLinks.push_back("RHandBaby2Link");
-  filteredLinks.push_back("RHandBaby3Link");*/
-
-
   /* Init joint values in degrees */
  	halfSitting["Torso_0"] = { 0.0 };
   halfSitting["Torso_1"] = { 0.0 };
@@ -85,44 +50,48 @@ HumanRobotModule::HumanRobotModule()
   halfSitting["LLeg_2"] = { 0.0 };
  	halfSitting["LShin_0"] = { 0.0 };
  	halfSitting["LAnkle_0"] = { 0.0 };
+  halfSitting["LAnkle_1"] = { 0.0 };
  	halfSitting["RLeg_0"] = { 0.0 };
   halfSitting["RLeg_1"] = { 0.0 };
   halfSitting["RLeg_2"] = { 0.0 };
  	halfSitting["RShin_0"] = { 0.0 };
  	halfSitting["RAnkle_0"] = { 0.0 };
+  halfSitting["RAnkle_1"] = { 0.0 };
 
 
   _ref_joint_order = {
- 	"Torso_0",
-  "Torso_1",
-  "Torso_2",
- 	"Head_0",
-  "Head_1",
-  "Head_2",
- 	"LArm_0",
-  "LArm_1",
-  "LArm_2",
- 	"LElbow",
- 	"LForearm",
- 	"LWrist_0",
-  "LWrist_1",
- 	"RArm_0",
-  "RArm_1",
-  "RArm_2",
- 	"RElbow",
- 	"RForearm",
- 	"RWrist_0",
-  "RWrist_1",
-  "LLeg_0",
-  "LLeg_1",
-  "LLeg_2",
- 	"LShin_0",
- 	"LAnkle_0l",
- 	"RLeg_0",
-  "RLeg_1",
-  "RLeg_2",
- 	"RShin_0",
- 	"RAnkle_0"
+ 	"Torso_0", // 2
+  "Torso_1", // 3
+  "Torso_2", // 4
+ 	"Head_0", // 5
+  "Head_1", // 6
+  "Head_2", // 7
+ 	"LArm_0", // 8
+  "LArm_1", // 9
+  "LArm_2", // 10
+ 	"LElbow", // 11
+ 	"LForearm", // 12
+ 	"LWrist_0", // 13
+  "LWrist_1", // 14
+ 	"RArm_0", // 15
+  "RArm_1", // 16
+  "RArm_2", // 17
+ 	"RElbow", // 18
+ 	"RForearm", // 19
+ 	"RWrist_0", // 20
+  "RWrist_1", // 21
+  "LLeg_0", // 22
+  "LLeg_1", // 23
+  "LLeg_2", // 24
+ 	"LShin_0", // 25
+ 	"LAnkle_0", // 26
+  "LAnkle_1", // 27
+ 	"RLeg_0", // 28
+  "RLeg_1", // 29
+  "RLeg_2", // 20
+ 	"RShin_0", // 31
+ 	"RAnkle_0" // 32
+  "RAnkle_1" // 33
   };
 
   
