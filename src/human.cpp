@@ -61,37 +61,37 @@ HumanRobotModule::HumanRobotModule()
 
   _ref_joint_order = {
  	"Torso_0", // 2
-  "Torso_1", // 3
+  "Torso_1",
   "Torso_2", // 4
- 	"Head_0", // 5
+ 	"Head_0",
   "Head_1", // 6
-  "Head_2", // 7
+  "Head_2",
  	"LArm_0", // 8
-  "LArm_1", // 9
+  "LArm_1",
   "LArm_2", // 10
- 	"LElbow", // 11
+ 	"LElbow",
  	"LForearm", // 12
- 	"LWrist_0", // 13
+ 	"LWrist_0",
   "LWrist_1", // 14
- 	"RArm_0", // 15
+ 	"RArm_0",
   "RArm_1", // 16
-  "RArm_2", // 17
+  "RArm_2",
  	"RElbow", // 18
- 	"RForearm", // 19
+ 	"RForearm",
  	"RWrist_0", // 20
-  "RWrist_1", // 21
+  "RWrist_1",
   "LLeg_0", // 22
-  "LLeg_1", // 23
+  "LLeg_1",
   "LLeg_2", // 24
- 	"LShin_0", // 25
+ 	"LShin_0",
  	"LAnkle_0", // 26
-  "LAnkle_1", // 27
+  "LAnkle_1",
  	"RLeg_0", // 28
-  "RLeg_1", // 29
+  "RLeg_1",
   "RLeg_2", // 20
- 	"RShin_0", // 31
- 	"RAnkle_0" // 32
-  "RAnkle_1" // 33
+ 	"RShin_0",
+ 	"RAnkle_0", // 32
+  "RAnkle_1" 
   };
 
   
