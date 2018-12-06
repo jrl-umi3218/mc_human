@@ -126,6 +126,8 @@ HumanRobotModule::HumanRobotModule()
 
   _commonSelfCollisions = _minimalSelfCollisions;
 
+  _default_attitude = {{1., 0., 0., 0., 0., 0., 0.987}};
+
  }
 
 
