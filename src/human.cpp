@@ -1,21 +1,22 @@
 #include "human.h"
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
-#include <mc_rtc/config.h>
+
 #include <mc_rtc/logging.h>
 
 #include <boost/algorithm/string.hpp>
+
 #include <fstream>
 
-namespace mc_rtc
-{
-  static std::string HUMAN_DESCRIPTION_PATH = HUMAN_DESCRIPTION_PATH_IN;
-}
+#include <config.h>
+
+
+#include <boost/filesystem.hpp>
+namespace bfs = boost::filesystem;
+
 
 namespace mc_robots
 {
 HumanRobotModule::HumanRobotModule()
- : RobotModule(mc_rtc::HUMAN_DESCRIPTION_PATH, "human")
+ : RobotModule(HUMAN_DESCRIPTION_PATH, "human")
  {
 
   /* Path to surface descriptions */

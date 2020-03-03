@@ -1,10 +1,7 @@
 #pragma once
 
 #include <mc_rbdyn/RobotModule.h>
-#include <mc_rbdyn_urdf/urdf.h>
-
-#include <mc_rtc/logging.h>
-#include "api.h"
+#include <mc_robots/api.h>
 
 
 namespace mc_robots
@@ -35,4 +32,17 @@ namespace mc_robots
   };
 }
 
-ROBOT_MODULE_DEFAULT_CONSTRUCTOR("human", mc_robots::HumanRobotModule)
+extern "C"
+{
+  ROBOT_MODULE_API std::vector<std::string> MC_RTC_ROBOT_MODULE() { return {"human"}; }
+  ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr) { delete ptr; }
+  ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & robot)
+  {
+    if(robot == "human") { return new mc_robots::HumanRobotModule(); }
+    else
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "Attempted to load " << robot << " from human module")
+    }
+  }
+}
+
