@@ -92,12 +92,12 @@ HumanRobotModule::HumanRobotModule()
   "RLeg_2", // 20
  	"RShin_0",
  	"RAnkle_0", // 32
-  "RAnkle_1" 
+  "RAnkle_1"
   };
 
-  
+
   /* Read URDF file */
-  readUrdf("human", filteredLinks);
+  readUrdf("human", false, filteredLinks);
 
   auto fileByBodyName = stdCollisionsFiles(mb);
   _convexHull = getConvexHull(fileByBodyName);
@@ -105,7 +105,7 @@ HumanRobotModule::HumanRobotModule()
   _bounds = nominalBounds(limits);
   _stance = halfSittingPose(mb);
 
-  
+
   _minimalSelfCollisions = {
     mc_rbdyn::Collision("HeadLink", "LArmLink", 0.03, 0.01, 0.),
     mc_rbdyn::Collision("HeadLink", "LForearmLink", 0.03, 0.01, 0.),
@@ -132,7 +132,9 @@ HumanRobotModule::HumanRobotModule()
  }
 
 
- void HumanRobotModule::readUrdf(const std::string & robotName, const std::vector<std::string> & filteredLinks)
+ void HumanRobotModule::readUrdf(const std::string & robotName,
+                                     bool fixed,
+                                     const std::vector<std::string> & filteredLinks)
   {
     std::string urdfPath = path + "/urdf/" + robotName + ".urdf";
     std::ifstream ifs(urdfPath);
@@ -140,8 +142,8 @@ HumanRobotModule::HumanRobotModule()
     {
       std::stringstream urdf;
       urdf << ifs.rdbuf();
-      /* Consider robot as fixed base for now with root at base_footprint */
-      mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), false, filteredLinks);
+      /* Consider robot as fixed base for now */
+      mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), fixed, filteredLinks);
       mb = res.mb;
       mbc = res.mbc;
       mbg = res.mbg;
@@ -190,7 +192,7 @@ HumanRobotModule::HumanRobotModule()
       bfs::path fpath = bfs::path(convexPath)/(f.second.second+"-ch.txt");
       if (bfs::exists(fpath))
       {
-       res[f.first] = std::pair<std::string, std::string>(f.second.first, convexPath + f.second.second + "-ch.txt"); 
+       res[f.first] = std::pair<std::string, std::string>(f.second.first, convexPath + f.second.second + "-ch.txt");
       }
     }
     return res;
@@ -243,20 +245,5 @@ HumanRobotModule::HumanRobotModule()
     return res;
   }
 
-  const std::map<std::string, std::pair<std::string, std::string> > & HumanRobotModule::convexHull() const
-  {
-    return _convexHull;
-  }
-
-
-  const std::vector< std::map<std::string, std::vector<double> > > & HumanRobotModule::bounds() const
-  {
-    return _bounds;
-  }
-
-  const std::map<std::string, std::vector<double> > & HumanRobotModule::stance() const
-  {
-    return _stance;
-  }
 
 }

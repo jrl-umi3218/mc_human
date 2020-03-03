@@ -21,4 +21,4 @@ configure_file(src/config.h.in "${CMAKE_CURRENT_BINARY_DIR}/include/config.h")
 
 add_robot(human src/human.cpp src/human.h)
 target_include_directories(human PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/include")
-//s
+
