@@ -256,7 +256,7 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
     }
     else
     {
-      LOG_ERROR("Could not open Human model at " << urdfPath)
+      mc_rtc::log::error_and_throw<std::runtime_error>("Could not open Human model at {}", urdfPath);
       throw("Failed to open Human model");
     }
   }
@@ -277,7 +277,7 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
       }
       else if(j.name() != "Root" && j.dof() > 0)
       {
-        LOG_WARNING("Joint " << j.name() << " has " << j.dof() << " dof, but is not part of half sitting posture.");
+        mc_rtc::log::warning("Joint {} has {} dof, but is not part of half sitting posture.", j.name(), j.dof());
       }
     }
     return res;
