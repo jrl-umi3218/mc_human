@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(mc-human)
+set(PROJECT_NAME mc_human)
+set(PROJECT_DESCRIPTION "mc_human")
+set(PROJECT_URL "https://gite.lirmm.fr/multi-contact/mc_human")
+
+project(mc_human)
 
 set(CMAKE_CXX_STANDARD 11)
 

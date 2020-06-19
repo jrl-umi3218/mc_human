@@ -2,12 +2,12 @@
 
 ## Required packages
 
-* [`human_description`](https://gite.lirmm.fr/nana/human_description)
+* [`human_description`](https://gite.lirmm.fr/multi-contact/human_description)
 
 ## Building and installing robot module
 
 ```bash
-git clone https://gite.lirmm.fr/nana/mc_human
+git clone https://gite.lirmm.fr/multi-contact/mc_human
 cd mc_human
 mkdir build
 cd build
