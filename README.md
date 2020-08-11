@@ -1,4 +1,4 @@
-# Robot module for `mc_rtc` representing a human model
+# Robot module for [`mc_rtc`](https://jrl-umi3218.github.io/mc_rtc/) representing a human model
 
 ## Required packages
 
