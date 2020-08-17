@@ -2,12 +2,13 @@
 
 ## Required packages
 
-* [`human_description`](https://gite.lirmm.fr/multi-contact/human_description)
+* [`mc_rtc`](https://jrl-umi3218.github.io/mc_rtc/)
+* [`human_description`](https://github.com/jrl-umi3218/human_description)
 
 ## Building and installing robot module
 
 ```bash
-git clone https://gite.lirmm.fr/multi-contact/mc_human
+git clone https://github.com/jrl-umi3218/mc_human
 cd mc_human
 mkdir build
 cd build
