@@ -6,6 +6,8 @@
 #include <mc_rtc/logging.h>
 #include <fstream>
 
+#include <RBDyn/parsers/urdf.h>
+
 namespace bfs = boost::filesystem;
 
 #ifndef M_PI
@@ -195,14 +197,11 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
   }
 
   /* Read URDF file */
-  readUrdf("human", fixed, excludedLinks);
+  init(rbd::parsers::from_urdf_file(urdf_path, fixed, excludedLinks));
 
   /* Collision hulls */
   auto fileByBodyName = stdCollisionsFiles(mb);
   _convexHull = getConvexHull(fileByBodyName);
-
-  /* Joint limits */
-  _bounds = nominalBounds(limits);
 
   /* Halfsit posture */
   _stance = halfSittingPose(mb);
@@ -232,35 +231,6 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
   _default_attitude = {{1., 0., 0., 0., 0., 0., 0.987}};
 
  }
-
-
- void HumanRobotModule::readUrdf(const std::string & robotName,
-                                     bool fixed,
-                                     const std::vector<std::string> & filteredLinks)
-  {
-    std::string urdfPath = path + "/urdf/" + robotName + ".urdf";
-    std::ifstream ifs(urdfPath);
-    if(ifs.is_open())
-    {
-      std::stringstream urdf;
-      urdf << ifs.rdbuf();
-      /* Consider robot as fixed base for now */
-      mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), fixed, filteredLinks);
-      mb = res.mb;
-      mbc = res.mbc;
-      mbg = res.mbg;
-      limits = res.limits;
-
-      _visual = res.visual;
-      _collisionTransforms = res.collision_tf;
-    }
-    else
-    {
-      mc_rtc::log::error_and_throw<std::runtime_error>("Could not open Human model at {}", urdfPath);
-      throw("Failed to open Human model");
-    }
-  }
-
 
   std::map<std::string, std::vector<double>> HumanRobotModule::halfSittingPose(const rbd::MultiBody & mb) const
   {

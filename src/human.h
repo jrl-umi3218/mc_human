@@ -14,7 +14,6 @@ namespace mc_robots
     HumanRobotModule(bool fixed, bool hands);
 
   protected:
-    void readUrdf(const std::string & robotName, bool fixed, const std::vector<std::string> & filteredLinks);
     std::map<std::string, std::vector<double>> halfSittingPose(const rbd::MultiBody & mb) const;
     std::vector< std::map<std::string, std::vector<double> > > nominalBounds(const mc_rbdyn_urdf::Limits & limits) const;
     std::map<std::string, std::pair<std::string, std::string>> stdCollisionsFiles(const rbd::MultiBody & mb) const;
