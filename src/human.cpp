@@ -114,35 +114,35 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
 
   /* Default posture joint values in degrees */
  	halfSitting["Torso_0"] = { 0.0 };
-  halfSitting["Torso_1"] = { 0.0 };
+  halfSitting["Torso_1"] = { 10.0 };
   halfSitting["Torso_2"] = { 0.0 };
  	halfSitting["Head_0"] = { 0.0 };
   halfSitting["Head_1"] = { 0.0 };
   halfSitting["Head_2"] = { 0.0 };
- 	halfSitting["LArm_0"] = { 0.0 };
+ 	halfSitting["LArm_0"] = { -70.0 };
   halfSitting["LArm_1"] = { 0.0 };
   halfSitting["LArm_2"] = { 0.0 };
  	halfSitting["LElbow"] = { 0.0 };
- 	halfSitting["LForearm"] = { 0.0 };
+ 	halfSitting["LForearm"] = { -45.0 };
  	halfSitting["LWrist_0"] = { 0 };
   halfSitting["LWrist_1"] = { 0 };
- 	halfSitting["RArm_0"] = { 0.0 };
+ 	halfSitting["RArm_0"] = { 70.0 };
   halfSitting["RArm_1"] = { 0.0 };
   halfSitting["RArm_2"] = { 0.0 };
  	halfSitting["RElbow"] = { 0.0 };
-  halfSitting["RForearm"] = { 0.0 };
+  halfSitting["RForearm"] = { 45.0 };
  	halfSitting["RWrist_0"] = { 0.0 };
   halfSitting["RWrist_1"] = { 0.0 };
  	halfSitting["LLeg_0"] = { 0.0 };
-  halfSitting["LLeg_1"] = { 0.0 };
+  halfSitting["LLeg_1"] = { -80.0 };
   halfSitting["LLeg_2"] = { 0.0 };
- 	halfSitting["LShin_0"] = { 0.0 };
+ 	halfSitting["LShin_0"] = { 90.0 };
  	halfSitting["LAnkle_0"] = { 0.0 };
   halfSitting["LAnkle_1"] = { 0.0 };
  	halfSitting["RLeg_0"] = { 0.0 };
-  halfSitting["RLeg_1"] = { 0.0 };
+  halfSitting["RLeg_1"] = { -80.0 };
   halfSitting["RLeg_2"] = { 0.0 };
- 	halfSitting["RShin_0"] = { 0.0 };
+ 	halfSitting["RShin_0"] = { 90.0 };
  	halfSitting["RAnkle_0"] = { 0.0 };
   halfSitting["RAnkle_1"] = { 0.0 };
   if(hands){
@@ -202,6 +202,11 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
   /* Collision hulls */
   auto fileByBodyName = stdCollisionsFiles(mb);
   _convexHull = getConvexHull(fileByBodyName);
+
+  // Accelerometer 
+  _bodySensors.emplace_back("Accelerometer", "body", sva::PTransformd(Eigen::Vector3d(0, 0, 0.1095)));
+  // Floating base
+  _bodySensors.emplace_back("FloatingBase", "body", sva::PTransformd::Identity());
 
   /* Halfsit posture */
   _stance = halfSittingPose(mb);
