@@ -271,7 +271,7 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
   }
 
 
-  std::vector< std::map<std::string, std::vector<double> > > HumanRobotModule::nominalBounds(const mc_rbdyn_urdf::Limits & limits) const
+  std::vector< std::map<std::string, std::vector<double> > > HumanRobotModule::nominalBounds(const rbd::parsers::Limits & limits) const
   {
     std::vector< std::map<std::string, std::vector<double> > > res(0);
     res.push_back(limits.lower);
