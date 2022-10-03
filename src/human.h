@@ -26,6 +26,11 @@ namespace mc_robots
     std::vector<std::string> gripperJoints;
   };
 
+struct MC_ROBOTS_DLLAPI HumanMin : public mc_rbdyn::RobotModule
+{
+HumanMin();
+};
+
 } // namespace mc_robots
 
 
@@ -33,7 +38,7 @@ extern "C"
 {
   ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names)
   {
-    names = {"human", "humanFixed", "humanNoHands", "humanFixedNoHands"};
+    names = {"human", "humanFixed", "humanNoHands", "humanFixedNoHands", "humanMin"};
   }
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
   {
@@ -57,6 +62,10 @@ extern "C"
     else if(name == "humanFixedNoHands")
     {
       return new mc_robots::HumanRobotModule(true, false);
+    }
+    else if(name == "humanMin")
+    {
+      return new mc_robots::HumanMin();
     }
     else
     {
