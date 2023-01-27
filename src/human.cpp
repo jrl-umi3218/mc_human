@@ -235,7 +235,7 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
 HumanMin::HumanMin()
 : RobotModule(HUMAN_DESCRIPTION_PATH, "human_min")
 {
-init(rbd::parsers::from_urdf_file(urdf_path, true));
+  init(rbd::parsers::from_urdf_file(urdf_path, false));
 }
 
   std::map<std::string, std::vector<double>> HumanRobotModule::halfSittingPose(const rbd::MultiBody & mb) const
