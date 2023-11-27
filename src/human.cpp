@@ -114,7 +114,7 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
 
   /* Default posture joint values in degrees */
  	halfSitting["Torso_0"] = { 0.0 };
-  halfSitting["Torso_1"] = { 10.0 };
+  halfSitting["Torso_1"] = { 0.0 };
   halfSitting["Torso_2"] = { 0.0 };
  	halfSitting["Head_0"] = { 0.0 };
   halfSitting["Head_1"] = { 0.0 };
@@ -134,13 +134,13 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
  	halfSitting["RWrist_0"] = { 0.0 };
   halfSitting["RWrist_1"] = { 0.0 };
  	halfSitting["LLeg_0"] = { 0.0 };
-  halfSitting["LLeg_1"] = { -80.0 };
+  halfSitting["LLeg_1"] = { -90.0 };
   halfSitting["LLeg_2"] = { 0.0 };
  	halfSitting["LShin_0"] = { 90.0 };
  	halfSitting["LAnkle_0"] = { 0.0 };
   halfSitting["LAnkle_1"] = { 0.0 };
  	halfSitting["RLeg_0"] = { 0.0 };
-  halfSitting["RLeg_1"] = { -80.0 };
+  halfSitting["RLeg_1"] = { -90.0 };
   halfSitting["RLeg_2"] = { 0.0 };
  	halfSitting["RShin_0"] = { 90.0 };
  	halfSitting["RAnkle_0"] = { 0.0 };
@@ -204,9 +204,9 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
   _convexHull = getConvexHull(fileByBodyName);
 
   // Accelerometer 
-  _bodySensors.emplace_back("Accelerometer", "body", sva::PTransformd(Eigen::Vector3d(0, 0, 0.1095)));
-  // Floating base
-  _bodySensors.emplace_back("FloatingBase", "body", sva::PTransformd::Identity());
+  _bodySensors.emplace_back("Accelerometer", "HipsLink", sva::PTransformd(Eigen::Vector3d(0, 0, 0.1095)));
+  // // Floating base
+  _bodySensors.emplace_back("FloatingBase", "HipsLink", sva::PTransformd::Identity());
 
   /* Halfsit posture */
   _stance = halfSittingPose(mb);
@@ -319,6 +319,58 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
         res[b.name()] = {b.name(), b.name()};
       }
     }
+
+    // // Lambda function to associate bodies and the corresponding files
+    // auto addBody = [&res](const std::string & body, const std::string & file) { res[body] = {body, file}; };
+
+    // addBody("HipsLinkFull", "HipsLinkFull");
+    // addBody("TorsoLinkFull", "TorsoLinkFull");
+    // addBody("HeadLinkFull", "HeadLinkFull");
+    // addBody("LArmLinkFull", "LArmLinkFull");
+    // addBody("LElbowLink", "LElbowLink");
+    // addBody("LForearmLink", "LForearmLink");
+    // addBody("LWrist", "LWrist");
+    // addBody("RArmLinkFull", "RArmLinkFull");
+    // addBody("RElbowLink", "RElbowLink");
+    // addBody("RForearmLink", "RForearmLink");
+    // addBody("RWrist", "RWrist");
+    // addBody("LLegLink", "LLegLink");
+    // addBody("LShinLink", "LShinLink");
+    // addBody("LAnkleLinkFull", "LAnkleLinkFull");
+    // addBody("RLegLink", "RLegLink");
+    // addBody("RShinLink", "RShinLink");
+    // addBody("RAnkleLinkFull", "RAnkleLinkFull");
+    // addBody("LThumb0thPhalange", "LThumb0thPhalange");
+    // addBody("LThumb1stPhalange", "LThumb1stPhalange");
+    // addBody("LThumb2ndPhalange", "LThumb2ndPhalange");
+    // addBody("LIndex1stPhalange", "LIndex1stPhalange");
+    // addBody("LIndex2ndPhalange", "LIndex2ndPhalange");
+    // addBody("LIndex3rdPhalange", "LIndex3rdPhalange");
+    // addBody("LMiddle1stPhalange", "LMiddle1stPhalange");
+    // addBody("LMiddle2ndPhalange", "LMiddle2ndPhalange");
+    // addBody("LMiddle3rdPhalange", "LMiddle3rdPhalange");
+    // addBody("LRing1stPhalange", "LRing1stPhalange");
+    // addBody("LRing2ndPhalange", "LRing2ndPhalange");
+    // addBody("LRing3rdPhalange", "LRing3rdPhalange");
+    // addBody("LBaby1stPhalange", "LBaby1stPhalange");
+    // addBody("LBaby2ndPhalange", "LBaby2ndPhalange");
+    // addBody("LBaby3rdPhalange", "LBaby3rdPhalange");
+    // addBody("RThumb0thPhalange", "RThumb0thPhalange");
+    // addBody("RThumb1stPhalange", "RThumb1stPhalange");
+    // addBody("RThumb2ndPhalange", "RThumb2ndPhalange");
+    // addBody("RIndex1stPhalange", "RIndex1stPhalange");
+    // addBody("RIndex2ndPhalange", "RIndex2ndPhalange");
+    // addBody("RIndex3rdPhalange", "RIndex3rdPhalange");
+    // addBody("RMiddle1stPhalange", "RMiddle1stPhalange");
+    // addBody("RMiddle2ndPhalange", "RMiddle2ndPhalange");
+    // addBody("RMiddle3rdPhalange", "RMiddle3rdPhalange");
+    // addBody("RRing1stPhalange", "RRing1stPhalange");
+    // addBody("RRing2ndPhalange", "RRing2ndPhalange");
+    // addBody("RRing3rdPhalange", "RRing3rdPhalange");
+    // addBody("RBaby1stPhalange", "RBaby1stPhalange");
+    // addBody("RBaby2ndPhalange", "RBaby2ndPhalange");
+    // addBody("RBaby3rdPhalange", "RBaby3rdPhalange");
+
     return res;
   }
 

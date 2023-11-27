@@ -15,7 +15,7 @@ write_basic_package_version_file(
 configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake.in" "${PROJECT_CONFIG}" INSTALL_DESTINATION "${CONFIG_INSTALL_DIR}")
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake" "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake" DESTINATION "${CONFIG_INSTALL_DIR}")
 
-find_package(mc_rtc 1.4.0 REQUIRED)
+find_package(mc_rtc REQUIRED)
 find_description_package(human_description REQUIRED)
 
 message("HUMAN_DESCRIPTION_PATH: ${HUMAN_DESCRIPTION_PATH}")
