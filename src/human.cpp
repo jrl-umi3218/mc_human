@@ -17,99 +17,40 @@ namespace bfs = boost::filesystem;
 
 namespace mc_robots
 {
-HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
+HumanRobotModule::HumanRobotModule(bool fixed, bool canonical)
  : RobotModule(HUMAN_DESCRIPTION_PATH, "human")
  {
+   std::string canonicalName = "human";
+  if(fixed) canonicalName += "Fixed";
+  if(canonical) canonicalName += "Canonical";
+  _canonicalParameters = {canonicalName};
+
   /* Path to surface descriptions */
   rsdf_dir = path + "/rsdf";
 
   /* Virtual links */
- 	virtualLinks.push_back("base_link");
-  virtualLinks.push_back("hip2torso_1");
-  virtualLinks.push_back("hip2torso_2");
-  virtualLinks.push_back("torso2head_1");
-  virtualLinks.push_back("torso2head_2");
-  virtualLinks.push_back("torso2lshoulder_1");
-  virtualLinks.push_back("torso2lshoulder_2");
-  virtualLinks.push_back("forearm2lwrist_1");
-  virtualLinks.push_back("torso2rshoulder_1");
-  virtualLinks.push_back("torso2rshoulder_2");
-  virtualLinks.push_back("forearm2rwrist_1");
-  virtualLinks.push_back("torso2lleg_1");
-  virtualLinks.push_back("torso2lleg_2");
-  virtualLinks.push_back("shin2lankle_1");
-  virtualLinks.push_back("torso2rleg_1");
-  virtualLinks.push_back("torso2rleg_2");
-  virtualLinks.push_back("shin2rankle_1");
-
-  /* Gripper links not included in NoHands model */
-  if(!hands){
-    excludedLinks.push_back("LHandThumb0Link");
-    excludedLinks.push_back("LHandThumb1Link");
-    excludedLinks.push_back("LHandThumb2Link");
-    excludedLinks.push_back("LHandIndex1Link");
-    excludedLinks.push_back("LHandIndex2Link");
-    excludedLinks.push_back("LHandIndex3Link");
-    excludedLinks.push_back("LHandMiddle1Link");
-    excludedLinks.push_back("LHandMiddle2Link");
-    excludedLinks.push_back("LHandMiddle3Link");
-    excludedLinks.push_back("LHandRing1Link");
-    excludedLinks.push_back("LHandRing2Link");
-    excludedLinks.push_back("LHandRing3Link");
-    excludedLinks.push_back("LHandBaby1Link");
-    excludedLinks.push_back("LHandBaby2Link");
-    excludedLinks.push_back("LHandBaby3Link");
-    excludedLinks.push_back("RHandThumb0Link");
-    excludedLinks.push_back("RHandThumb1Link");
-    excludedLinks.push_back("RHandThumb2Link");
-    excludedLinks.push_back("RHandIndex1Link");
-    excludedLinks.push_back("RHandIndex2Link");
-    excludedLinks.push_back("RHandIndex3Link");
-    excludedLinks.push_back("RHandMiddle1Link");
-    excludedLinks.push_back("RHandMiddle2Link");
-    excludedLinks.push_back("RHandMiddle3Link");
-    excludedLinks.push_back("RHandRing1Link");
-    excludedLinks.push_back("RHandRing2Link");
-    excludedLinks.push_back("RHandRing3Link");
-    excludedLinks.push_back("RHandBaby1Link");
-    excludedLinks.push_back("RHandBaby2Link");
-    excludedLinks.push_back("RHandBaby3Link");
-  }
-
-  /* Gripper joints to include in half posture if hands */
-  if(hands){
-    gripperJoints.push_back("RHand");
-    gripperJoints.push_back("RHandThumbLink1");
-    gripperJoints.push_back("RHandThumbLink2");
-    gripperJoints.push_back("RHandThumbLink3");
-    gripperJoints.push_back("RHandIndexLink1");
-    gripperJoints.push_back("RHandIndexLink2");
-    gripperJoints.push_back("RHandIndexLink3");
-    gripperJoints.push_back("RHandMiddleLink1");
-    gripperJoints.push_back("RHandMiddleLink2");
-    gripperJoints.push_back("RHandMiddleLink3");
-    gripperJoints.push_back("RHandRingLink1");
-    gripperJoints.push_back("RHandRingLink2");
-    gripperJoints.push_back("RHandRingLink3");
-    gripperJoints.push_back("RHandBabyLink1");
-    gripperJoints.push_back("RHandBabyLink2");
-    gripperJoints.push_back("RHandBabyLink3");
-    gripperJoints.push_back("LHand");
-    gripperJoints.push_back("LHandThumbLink1");
-    gripperJoints.push_back("LHandThumbLink2");
-    gripperJoints.push_back("LHandThumbLink3");
-    gripperJoints.push_back("LHandIndexLink1");
-    gripperJoints.push_back("LHandIndexLink2");
-    gripperJoints.push_back("LHandIndexLink3");
-    gripperJoints.push_back("LHandMiddleLink1");
-    gripperJoints.push_back("LHandMiddleLink2");
-    gripperJoints.push_back("LHandMiddleLink3");
-    gripperJoints.push_back("LHandRingLink1");
-    gripperJoints.push_back("LHandRingLink2");
-    gripperJoints.push_back("LHandRingLink3");
-    gripperJoints.push_back("LHandBabyLink1");
-    gripperJoints.push_back("LHandBabyLink2");
-    gripperJoints.push_back("LHandBabyLink3");
+  auto gripperLinks = std::vector<std::string>{};
+  if(!canonical)
+  {
+    for(const auto & link : { "HandThumb", "HandIndex", "HandMiddle", "HandRing", "HandBaby" })
+    for(const auto & side : {"L", "R"})
+    {
+      for(size_t i = 0; i <= 2; ++i)
+      {
+        if(link == std::string{"HandThumb"})
+        {
+          virtualLinks.push_back(fmt::format("{}{}{}Link", side, link, i));
+        }
+        else
+        {
+          virtualLinks.push_back(fmt::format("{}{}{}Link", side, link, i+1));
+        }
+        gripperLinks.push_back(virtualLinks.back());
+        mc_rtc::log::info("Adding virtual {}", virtualLinks.back());
+      }
+    }
+    virtualLinks.push_back("LHand");
+    virtualLinks.push_back("RHand");
   }
 
   /* Default posture joint values in degrees */
@@ -145,16 +86,18 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
  	halfSitting["RShin_0"] = { 90.0 };
  	halfSitting["RAnkle_0"] = { 0.0 };
   halfSitting["RAnkle_1"] = { 0.0 };
-  if(hands){
-    for(const auto& gripJ : gripperJoints){
-      halfSitting[gripJ] = { 0 };
+  halfSitting["RHand"] = { 0.0 };
+  halfSitting["LHand"] = { 0.0 };
+  if(canonical)
+  {
+    for(const auto & gLink : gripperLinks)
+    {
+      halfSitting[gLink] = { 0.0 };
     }
   }
 
   /* Grippers */
-  if(hands){
-    _grippers = {{"l_gripper", {"LHand"}, true}, {"r_gripper", {"RHand"}, true}};
-  }
+  _grippers = {{"l_gripper", {"LHand"}, true}, {"r_gripper", {"RHand"}, true}};
 
   /* Reference joint order */
   _ref_joint_order = {
@@ -189,15 +132,17 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
   "RLeg_2", // 28
  	"RShin_0", // 29
  	"RAnkle_0", // 30
-  "RAnkle_1" // 31
+  "RAnkle_1", // 31
+  "LHand", // 32
+  "RHand" // 33
   };
-  if(hands){
-    _ref_joint_order.push_back("LHand"); // 32
-    _ref_joint_order.push_back("RHand"); // 33
-  }
 
   /* Read URDF file */
-  init(rbd::parsers::from_urdf_file(urdf_path, fixed, excludedLinks));
+  init(rbd::parsers::from_urdf_file(urdf_path,
+        rbd::parsers::ParserParameters{}
+          .fixed(fixed)
+          .filtered_links(virtualLinks)
+          .remove_filtered_links(false)));
 
   /* Collision hulls */
   auto fileByBodyName = stdCollisionsFiles(mb);
@@ -243,8 +188,7 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool hands)
     for (const auto & j : mb.joints())
     {
       if(halfSitting.count(j.name()))
-      {
-        res[j.name()] = halfSitting.at(j.name());
+      { res[j.name()] = halfSitting.at(j.name());
         for (auto & ji : res[j.name()])
         {
           ji = M_PI*ji / 180;

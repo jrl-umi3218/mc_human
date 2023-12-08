@@ -11,7 +11,7 @@ namespace mc_robots
   struct MC_ROBOTS_DLLAPI HumanRobotModule : public mc_rbdyn::RobotModule
   {
   public:
-    HumanRobotModule(bool fixed, bool hands);
+    HumanRobotModule(bool fixed, bool canonical);
 
   protected:
     std::map<std::string, std::vector<double>> halfSittingPose(const rbd::MultiBody & mb) const;
@@ -34,7 +34,7 @@ extern "C"
 {
   ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names)
   {
-    names = {"human", "humanFixed", "humanNoHands", "humanFixedNoHands"};
+    names = {"human", "humanFixed", "humanCanonical", "humanFixedCanonical"};
   }
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
   {
@@ -45,19 +45,19 @@ extern "C"
     ROBOT_MODULE_CHECK_VERSION("human")
     if(name == "human")
     {
-      return new mc_robots::HumanRobotModule(false, true);
+      return new mc_robots::HumanRobotModule(false, false);
     }
     else if(name == "humanFixed")
     {
-      return new mc_robots::HumanRobotModule(true, true);
-    }
-    else if(name == "humanNoHands")
-    {
-      return new mc_robots::HumanRobotModule(false, false);
-    }
-    else if(name == "humanFixedNoHands")
-    {
       return new mc_robots::HumanRobotModule(true, false);
+    }
+    else if(name == "humanCanonical")
+    {
+      return new mc_robots::HumanRobotModule(false, true);
+    }
+    else if(name == "humanFixedCanonical")
+    {
+      return new mc_robots::HumanRobotModule(true, true);
     }
     else
     {
