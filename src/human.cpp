@@ -63,15 +63,17 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool canonical)
  	halfSitting["LArm_0"] = { -70.0 };
   halfSitting["LArm_1"] = { 0.0 };
   halfSitting["LArm_2"] = { 0.0 };
- 	halfSitting["LElbow"] = { 0.0 };
- 	halfSitting["LForearm"] = { -45.0 };
+ 	// halfSitting["LElbow"] = { 0.0 };
+ 	halfSitting["LForearm_0"] = { -45.0 };
+  halfSitting["LForearm_1"] = { 0.0 };
  	halfSitting["LWrist_0"] = { 0 };
   halfSitting["LWrist_1"] = { 0 };
  	halfSitting["RArm_0"] = { 70.0 };
   halfSitting["RArm_1"] = { 0.0 };
   halfSitting["RArm_2"] = { 0.0 };
- 	halfSitting["RElbow"] = { 0.0 };
-  halfSitting["RForearm"] = { 45.0 };
+ 	// halfSitting["RElbow"] = { 0.0 };
+  halfSitting["RForearm_0"] = { 45.0 };
+  halfSitting["RForearm_1"] = { 0.0 };
  	halfSitting["RWrist_0"] = { 0.0 };
   halfSitting["RWrist_1"] = { 0.0 };
  	halfSitting["LLeg_0"] = { 0.0 };
@@ -110,15 +112,17 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool canonical)
  	"LArm_0", // 6
   "LArm_1", // 7
   "LArm_2", // 8
- 	"LElbow", // 9
- 	"LForearm", // 10
+ 	// "LElbow", // 9
+ 	"LForearm_0", // 9
+  "LForearm_1", // 10
  	"LWrist_0", // 11
   "LWrist_1", // 12
  	"RArm_0", // 13
   "RArm_1", // 14
   "RArm_2", // 15
- 	"RElbow", // 16
- 	"RForearm", // 17
+ 	// "RElbow", // 16
+ 	"RForearm_0", // 16
+  "RForearm_1", // 17
  	"RWrist_0", // 18
   "RWrist_1", // 19
   "LLeg_0", // 20
