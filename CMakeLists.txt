@@ -18,7 +18,7 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake" "${CMAKE
 find_package(mc_rtc REQUIRED)
 find_description_package(human_description REQUIRED)
 
-message("HUMAN_DESCRIPTION_PATH: ${HUMAN_DESCRIPTION_PATH}")
+message(STATUS "HUMAN_DESCRIPTION_PATH: ${HUMAN_DESCRIPTION_PATH}")
 configure_file(src/config.h.in "${CMAKE_CURRENT_BINARY_DIR}/include/config.h")
 
 add_robot(human src/human.cpp src/human.h)
