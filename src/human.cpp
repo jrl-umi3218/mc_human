@@ -77,15 +77,15 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool canonical)
  	halfSitting["RWrist_0"] = { 0.0 };
   halfSitting["RWrist_1"] = { 0.0 };
  	halfSitting["LLeg_0"] = { 0.0 };
-  halfSitting["LLeg_1"] = { -90.0 };
+  halfSitting["LLeg_1"] = { 0.0 };
   halfSitting["LLeg_2"] = { 0.0 };
- 	halfSitting["LShin_0"] = { 90.0 };
+ 	halfSitting["LShin_0"] = { 0.0 };
  	halfSitting["LAnkle_0"] = { 0.0 };
   halfSitting["LAnkle_1"] = { 0.0 };
  	halfSitting["RLeg_0"] = { 0.0 };
-  halfSitting["RLeg_1"] = { -90.0 };
+  halfSitting["RLeg_1"] = { 0.0 };
   halfSitting["RLeg_2"] = { 0.0 };
- 	halfSitting["RShin_0"] = { 90.0 };
+ 	halfSitting["RShin_0"] = { 0.0 };
  	halfSitting["RAnkle_0"] = { 0.0 };
   halfSitting["RAnkle_1"] = { 0.0 };
   halfSitting["RHand"] = { 0.0 };
@@ -147,6 +147,35 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool canonical)
           .fixed(fixed)
           .filtered_links(virtualLinks)
           .remove_filtered_links(false)));
+
+  
+  for(auto & visual : _visual)
+  {
+    for(size_t i = 0; i < visual.second.size(); i++)
+    {
+      auto & v = visual.second[i];
+      v.material.type = rbd::parsers::Material::Type::COLOR;
+      auto & color = boost::get<rbd::parsers::Material::Color>(v.material.data);
+      color.r = 1.;
+      color.g = 1.;
+      color.b = 1.;
+      color.a = 0.2;
+      if (visual.first == "HipsLink")
+      {
+        color.a = 0.2;
+      }
+      if (visual.first == "TorsoLink")
+      {
+        color.a = 0.2;
+      }
+      if (visual.first == "HeadLink")
+      {
+        color.a = 1;
+      }
+      
+      
+    }
+  }
 
   /* Collision hulls */
   auto fileByBodyName = stdCollisionsFiles(mb);
