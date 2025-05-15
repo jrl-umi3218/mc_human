@@ -148,7 +148,7 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool canonical)
           .filtered_links(virtualLinks)
           .remove_filtered_links(false)));
 
-  
+
   for(auto & visual : _visual)
   {
     for(size_t i = 0; i < visual.second.size(); i++)
@@ -172,8 +172,8 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool canonical)
       {
         color.a = 1;
       }
-      
-      
+
+
     }
   }
 
@@ -181,7 +181,7 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool canonical)
   auto fileByBodyName = stdCollisionsFiles(mb);
   _convexHull = getConvexHull(fileByBodyName);
 
-  // Accelerometer 
+  // Accelerometer
   _bodySensors.emplace_back("Accelerometer", "HipsLink", sva::PTransformd(Eigen::Vector3d(0, 0, 0.1095)));
   // // Floating base
   _bodySensors.emplace_back("FloatingBase", "HipsLink", sva::PTransformd::Identity());
@@ -253,38 +253,6 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool canonical)
   }
 
 
-  std::vector< std::map<std::string, std::vector<double> > > HumanRobotModule::nominalBounds(const mc_rbdyn_urdf::Limits & limits) const
-  {
-    std::vector< std::map<std::string, std::vector<double> > > res(0);
-    res.push_back(limits.lower);
-    res.push_back(limits.upper);
-    {
-      auto mvelocity = limits.velocity;
-      for (auto & mv : mvelocity)
-      {
-        for (auto & mvi : mv.second)
-        {
-          mvi = -mvi;
-        }
-      }
-      res.push_back(mvelocity);
-    }
-    res.push_back(limits.velocity);
-    {
-      auto mtorque = limits.torque;
-      for (auto & mt : mtorque)
-      {
-        for (auto & mti : mt.second)
-        {
-          mti = -mti;
-        }
-      }
-      res.push_back(mtorque);
-    }
-    res.push_back(limits.torque);
-    return res;
-  }
-
   std::map<std::string, std::pair<std::string, std::string>> HumanRobotModule::stdCollisionsFiles(const rbd::MultiBody &/*mb*/) const
   {
     std::map<std::string, std::pair<std::string, std::string>> res;
@@ -296,57 +264,6 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool canonical)
         res[b.name()] = {b.name(), b.name()};
       }
     }
-
-    // // Lambda function to associate bodies and the corresponding files
-    // auto addBody = [&res](const std::string & body, const std::string & file) { res[body] = {body, file}; };
-
-    // addBody("HipsLinkFull", "HipsLinkFull");
-    // addBody("TorsoLinkFull", "TorsoLinkFull");
-    // addBody("HeadLinkFull", "HeadLinkFull");
-    // addBody("LArmLinkFull", "LArmLinkFull");
-    // addBody("LElbowLink", "LElbowLink");
-    // addBody("LForearmLink", "LForearmLink");
-    // addBody("LWrist", "LWrist");
-    // addBody("RArmLinkFull", "RArmLinkFull");
-    // addBody("RElbowLink", "RElbowLink");
-    // addBody("RForearmLink", "RForearmLink");
-    // addBody("RWrist", "RWrist");
-    // addBody("LLegLink", "LLegLink");
-    // addBody("LShinLink", "LShinLink");
-    // addBody("LAnkleLinkFull", "LAnkleLinkFull");
-    // addBody("RLegLink", "RLegLink");
-    // addBody("RShinLink", "RShinLink");
-    // addBody("RAnkleLinkFull", "RAnkleLinkFull");
-    // addBody("LThumb0thPhalange", "LThumb0thPhalange");
-    // addBody("LThumb1stPhalange", "LThumb1stPhalange");
-    // addBody("LThumb2ndPhalange", "LThumb2ndPhalange");
-    // addBody("LIndex1stPhalange", "LIndex1stPhalange");
-    // addBody("LIndex2ndPhalange", "LIndex2ndPhalange");
-    // addBody("LIndex3rdPhalange", "LIndex3rdPhalange");
-    // addBody("LMiddle1stPhalange", "LMiddle1stPhalange");
-    // addBody("LMiddle2ndPhalange", "LMiddle2ndPhalange");
-    // addBody("LMiddle3rdPhalange", "LMiddle3rdPhalange");
-    // addBody("LRing1stPhalange", "LRing1stPhalange");
-    // addBody("LRing2ndPhalange", "LRing2ndPhalange");
-    // addBody("LRing3rdPhalange", "LRing3rdPhalange");
-    // addBody("LBaby1stPhalange", "LBaby1stPhalange");
-    // addBody("LBaby2ndPhalange", "LBaby2ndPhalange");
-    // addBody("LBaby3rdPhalange", "LBaby3rdPhalange");
-    // addBody("RThumb0thPhalange", "RThumb0thPhalange");
-    // addBody("RThumb1stPhalange", "RThumb1stPhalange");
-    // addBody("RThumb2ndPhalange", "RThumb2ndPhalange");
-    // addBody("RIndex1stPhalange", "RIndex1stPhalange");
-    // addBody("RIndex2ndPhalange", "RIndex2ndPhalange");
-    // addBody("RIndex3rdPhalange", "RIndex3rdPhalange");
-    // addBody("RMiddle1stPhalange", "RMiddle1stPhalange");
-    // addBody("RMiddle2ndPhalange", "RMiddle2ndPhalange");
-    // addBody("RMiddle3rdPhalange", "RMiddle3rdPhalange");
-    // addBody("RRing1stPhalange", "RRing1stPhalange");
-    // addBody("RRing2ndPhalange", "RRing2ndPhalange");
-    // addBody("RRing3rdPhalange", "RRing3rdPhalange");
-    // addBody("RBaby1stPhalange", "RBaby1stPhalange");
-    // addBody("RBaby2ndPhalange", "RBaby2ndPhalange");
-    // addBody("RBaby3rdPhalange", "RBaby3rdPhalange");
 
     return res;
   }
