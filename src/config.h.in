@@ -1,4 +1,3 @@
 #pragma once
 
 constexpr auto HUMAN_DESCRIPTION_PATH = "@HUMAN_DESCRIPTION_PATH@";
-
