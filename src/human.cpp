@@ -1,14 +1,11 @@
 #include "human.h"
 #include "config.h"
 
-#include <boost/algorithm/string.hpp>
-#include <boost/filesystem.hpp>
 #include <mc_rtc/logging.h>
-#include <fstream>
-
 #include <RBDyn/parsers/urdf.h>
 
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #ifndef M_PI
 #  include <boost/math/constants/constants.hpp>
@@ -243,8 +240,8 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool canonical)
     std::map<std::string, std::pair<std::string, std::string> > res;
     for(const auto & f : files)
     {
-      bfs::path fpath = bfs::path(convexPath)/(f.second.second+"-ch.txt");
-      if (bfs::exists(fpath))
+      fs::path fpath = fs::path(convexPath)/(f.second.second+"-ch.txt");
+      if (fs::exists(fpath))
       {
        res[f.first] = std::pair<std::string, std::string>(f.second.first, convexPath + f.second.second + "-ch.txt");
       }
