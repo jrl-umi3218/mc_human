@@ -1,17 +1,13 @@
 #include "human.h"
 
 #include <RBDyn/parsers/urdf.h>
+#include <mc_rtc/constants.h>
 #include <mc_rtc/logging.h>
 
 #include <filesystem>
 
 #include "config.h"
 namespace fs = std::filesystem;
-
-#ifndef M_PI
-#include <boost/math/constants/constants.hpp>
-#define M_PI boost::math::constants::pi<double>()
-#endif
 
 namespace mc_robots {
 HumanRobotModule::HumanRobotModule(bool fixed, bool canonical)
@@ -93,16 +89,16 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool canonical)
 
   /* Reference joint order */
   _ref_joint_order = {
-      "Torso_0",  // 0
-      "Torso_1",  // 1
-      "Torso_2",  // 2
-      "Head_0",   // 3
-      "Head_1",   // 4
-      "Head_2",   // 5
-      "LArm_0",   // 6
-      "LArm_1",   // 7
-      "LArm_2",   // 8
-                 // "LElbow", // 9
+      "Torso_0",     // 0
+      "Torso_1",     // 1
+      "Torso_2",     // 2
+      "Head_0",      // 3
+      "Head_1",      // 4
+      "Head_2",      // 5
+      "LArm_0",      // 6
+      "LArm_1",      // 7
+      "LArm_2",      // 8
+                     // "LElbow", // 9
       "LForearm_0",  // 9
       "LForearm_1",  // 10
       "LWrist_0",    // 11
@@ -110,7 +106,7 @@ HumanRobotModule::HumanRobotModule(bool fixed, bool canonical)
       "RArm_0",      // 13
       "RArm_1",      // 14
       "RArm_2",      // 15
-                 // "RElbow", // 16
+                     // "RElbow", // 16
       "RForearm_0",  // 16
       "RForearm_1",  // 17
       "RWrist_0",    // 18
@@ -204,7 +200,7 @@ std::map<std::string, std::vector<double>> HumanRobotModule::halfSittingPose(
     if (halfSitting.count(j.name())) {
       res[j.name()] = halfSitting.at(j.name());
       for (auto& ji : res[j.name()]) {
-        ji = M_PI * ji / 180;
+        ji = mc_rtc::constants::PI * ji / 180;
       }
     } else if (j.name() != "Root" && j.dof() > 0) {
       mc_rtc::log::warning(
